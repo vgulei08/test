@@ -4,7 +4,7 @@
 @section('content')
     <div class="container">
         <dIv>
-            <texts-block />
+            <text-block />
         </dIv>
         <div class="accordion" id="accordionExampleWr">
             <div class="accordion-item">
