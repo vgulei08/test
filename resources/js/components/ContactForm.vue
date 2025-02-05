@@ -116,33 +116,33 @@ const handleSubmit = async () => {
     error.value = null
     success.value = false
 
-    // Create FormData object for file uploads
     const formDataToSend = new FormData()
     
-    // Add text fields
     Object.entries(formData.value).forEach(([key, value]) => {
       if (key !== 'images' && key !== 'files') {
         formDataToSend.append(key, value)
       }
     })
     
-    // Add images
     if (formData.value.images) {
       formData.value.images.forEach((image, index) => {
         formDataToSend.append(`images[${index}]`, image)
       })
     }
     
-    // Add files
     if (formData.value.files) {
       formData.value.files.forEach((file, index) => {
         formDataToSend.append(`files[${index}]`, file)
       })
     }
 
-    // Replace with your Laravel API endpoint
-    const response = await fetch('http://your-laravel-api.test/api/contacts', {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+
+    const response = await fetch('/api/contacts', {
       method: 'POST',
+      headers: {
+        'X-CSRF-TOKEN': csrfToken,
+      },
       body: formDataToSend,
     })
 
